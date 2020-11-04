@@ -1,61 +1,66 @@
 package io.github.tquality.checkit.CheckOnPage;
 
 import io.github.tquality.Waiting.WaitForIt;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import io.github.tquality.checkit.Screenshot.TakeScreenshot;
+import org.openqa.selenium.*;
 import org.testng.Assert;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Check for texts on page
+ */
 public abstract class CheckText {
 
     /**
-     * Searches for all elements with the exact given text and asserts this
+     * Check if the page source contains a certain text
      * @param webdriver the running webdriver
      * @param text the text we want to find
+     * @param screenshotFolder the screenshotfolder
      */
-    public void exactTextOnPage(WebDriver webdriver, String text){
-        String xpath = "./[text()='" + text + "']";
-        Optional<WebElement> webElements = WaitForIt.waitForElementXpath(webdriver,xpath);
-        if (!webElements.isEmpty()){
-            List<WebElement> webElementsFound = webElements.stream().collect(Collectors.toList());
-            for (WebElement webElement:webElementsFound) {
-                Assert.assertEquals(webElement.getText(),text,"Element does not have the exact text");
-            }
+    public static void pageSourceContainsText(WebDriver webdriver, String text, String screenshotFolder){
+        boolean check = webdriver.getPageSource().contains(text);
+        if(!check){
+            TakeScreenshot.createScreenshotJPEG(webdriver,screenshotFolder,"TextNotFound");
+            Assert.assertEquals(true,check);
         }
     }
 
     /**
-     * Searches if the pages contains elements that contain a certain string
-     * @param webDriver the running webdriver
-     * @param containText the part of the text we search
+     * Check if the page source contains a certain text
+     * @param webdriver the running webdriver
+     * @param text the text we want to find
+     * @param screenshotFolder the screenshotfolder
      */
-    public void pageContainsText(WebDriver webDriver, String containText){
-        String xpath = "./[contains(text(),'" + containText + "']";
-        Optional<WebElement> webElements = WaitForIt.waitForElementXpath(webDriver,xpath);
-        if (!webElements.isEmpty()){
-            List<WebElement> webElementsFound = webElements.stream().collect(Collectors.toList());
-            for (WebElement webElement:webElementsFound) {
-                Assert.assertEquals(webElement.getText().indexOf(containText),true,"Element does not contain the exact text");
-            }
+    public static void pageSourceDoesNotContainText(WebDriver webdriver, String text, String screenshotFolder){
+        boolean check = webdriver.getPageSource().contains(text);
+        if(check){
+            TakeScreenshot.createScreenshotJPEG(webdriver,screenshotFolder,"TextNotFound");
+            Assert.assertEquals(false,check);
         }
     }
 
     /**
-     * Check if a page doesn't contain a certain text
+     * Check if a text effectivly is shown on the page
      * @param webDriver the running webdriver
-     * @param text the text we don't want on the page
+     * @param text the text we want to find
+     * @param screenshotFolder the screenshotfolder for screenshots
      */
-    public void pageDoesNotContainText(WebDriver webDriver, String text){
-        String xpath = "./[contains(text(),'" + text + "']";
-        try {
-            WaitForIt.waitForElementXpath(webDriver, text);
+    public static void textDisplayedOnPage(WebDriver webDriver,String text,String screenshotFolder){
+        WaitForIt.waitForElementPresentXpath(webDriver,"//*[contains(text(),'" + text + "')]");
+        try{
+            List<WebElement> webElements = webDriver.findElements(By.xpath("//*[contains(text(),'" + text + "')]"));
+            for (WebElement webelement:webElements) {
+                if (!webelement.isDisplayed()){
+                    TakeScreenshot.createScreenshotJPEG(webDriver,screenshotFolder,"Text not found on the page");
+                    Assert.assertEquals(false,true,"Text not found on the page");
+                }
+            }
         }catch (NoSuchElementException ignored){
-            return;
+            TakeScreenshot.createScreenshotJPEG(webDriver,screenshotFolder,"Text not found on the page");
+            Assert.assertEquals(false,true,"Text not found on the page");
         }
-        Assert.assertEquals(false,true,"Found elements on the page that contained the given text");
     }
 }
