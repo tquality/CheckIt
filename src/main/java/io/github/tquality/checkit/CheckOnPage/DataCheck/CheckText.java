@@ -1,4 +1,4 @@
-package io.github.tquality.checkit.CheckOnPage;
+package io.github.tquality.checkit.CheckOnPage.DataCheck;
 
 import io.github.tquality.Waiting.WaitForIt;
 import io.github.tquality.checkit.Screenshot.TakeScreenshot;

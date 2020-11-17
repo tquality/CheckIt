@@ -1,4 +1,4 @@
-package io.github.tquality.checkit.CheckOnPage;
+package io.github.tquality.checkit.CheckOnPage.ObjectCheck;
 
 import io.github.tquality.Waiting.WaitForIt;
 import io.github.tquality.checkit.Screenshot.TakeScreenshot;
@@ -9,11 +9,18 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 /**
- * Class to check if an element is editable
+ * Class to check if an element is enabled
  */
-public abstract class CheckElementEnabled {
+public abstract class CheckItIsEnabled {
 
-    public static void elementWithNameEnableCheck(WebDriver webDriver, String elementName, boolean elementEnabled, String screenshotfolder){
+    /**
+     * Enable test on element
+     * @param webDriver the running webdriver
+     * @param elementName the element we want to test
+     * @param elementEnabled Is the element enabled or not
+     * @param screenshotfolder the screenshot folder for errors
+     */
+    public static void elementWithName(WebDriver webDriver, String elementName, boolean elementEnabled, String screenshotfolder){
         WebElement webElement = null;
         for (int i=0;i<10;i++) {
             WaitForIt.waitForPageToLoad(webDriver);
@@ -31,7 +38,14 @@ public abstract class CheckElementEnabled {
         }
     }
 
-    public static void elementWithXpathEnableCheck(WebDriver webDriver,String elementXpath,boolean elementEnable,String screenshotfolder){
+    /**
+     * Enable test on element
+     * @param webDriver the running webdriver
+     * @param elementXpath the element we want to test
+     * @param elementEnable Is the element enabled or not
+     * @param screenshotfolder the screenshot folder for errors
+     */
+    public static void elementWithXpath(WebDriver webDriver,String elementXpath,boolean elementEnable,String screenshotfolder){
         WebElement webElement = null;
         for (int i=0;i<10;i++) {
             WaitForIt.waitForPageToLoad(webDriver);
@@ -49,7 +63,14 @@ public abstract class CheckElementEnabled {
         }
     }
 
-    public static void elementWithIdEnableCheck(WebDriver webDriver,String elementId,boolean elementEnabled,String screenshotfolder){
+    /**
+     * Enable test on element
+     * @param webDriver the running webdriver
+     * @param elementId the element we want to test
+     * @param elementEnabled Is the element enabled or not
+     * @param screenshotfolder the screenshot folder for errors
+     */
+    public static void elementWithId(WebDriver webDriver,String elementId,boolean elementEnabled,String screenshotfolder){
         WebElement webElement = null;
         for (int i=0;i<10;i++) {
             WaitForIt.waitForPageToLoad(webDriver);
@@ -67,7 +88,14 @@ public abstract class CheckElementEnabled {
         }
     }
 
-    public static void elementWithCssSelectorEnableCheck(WebDriver webDriver,String cssSelector,boolean elementEnable,String screenshotfolder){
+    /**
+     * Enable test on element
+     * @param webDriver the running webdriver
+     * @param cssSelector the element we want to test
+     * @param elementEnable Is the element enabled or not
+     * @param screenshotfolder the screenshot folder for errors
+     */
+    public static void elementWithCssSelector(WebDriver webDriver,String cssSelector,boolean elementEnable,String screenshotfolder){
         WebElement webElement = null;
         for (int i=0;i<10;i++) {
             WaitForIt.waitForPageToLoad(webDriver);
@@ -83,6 +111,31 @@ public abstract class CheckElementEnabled {
             TakeScreenshot.createScreenshotJPEG(webDriver,screenshotfolder,"ElementNotInCorrectDisplayStatus");
             Assert.assertEquals(webElement.isEnabled(),elementEnable,"Element " + cssSelector
                     + " is not show in the correct enable status");
+        }
+    }
+
+    /**
+     * Enable test on element
+     * @param webDriver the running webdriver
+     * @param object the element we want to test
+     * @param elementEnable Is the element enabled or not
+     * @param screenshotfolder the screenshot folder for errors
+     */
+    public static void elementWithByObject(WebDriver webDriver,By object,boolean elementEnable,String screenshotfolder){
+        WebElement webElement = null;
+        for (int i=0;i<10;i++) {
+            WaitForIt.waitForPageToLoad(webDriver);
+            try {
+                webElement = webDriver.findElement(object);
+                break;
+            } catch (NoSuchElementException ignored) {
+                TakeScreenshot.createScreenshotJPEG(webDriver,screenshotfolder,"NoElementsFound");
+                Assert.assertEquals(true,false,"No Element found");
+            }
+        }
+        if (webElement.isEnabled() != elementEnable){
+            TakeScreenshot.createScreenshotJPEG(webDriver,screenshotfolder,"ElementNotInCorrectDisplayStatus");
+            Assert.assertEquals(webElement.isEnabled(),elementEnable,"Element is not show in the correct enable status");
         }
     }
 }

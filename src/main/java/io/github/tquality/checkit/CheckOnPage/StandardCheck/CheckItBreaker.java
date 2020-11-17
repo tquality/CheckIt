@@ -1,9 +1,12 @@
-package io.github.tquality.checkit.CheckOnPage;
+package io.github.tquality.checkit.CheckOnPage.StandardCheck;
 
 import io.github.tquality.checkit.Screenshot.TakeScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
+/**
+ * Class to break a testcase
+ */
 public abstract class CheckItBreaker {
 
     /**
