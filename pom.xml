@@ -4,7 +4,7 @@
 
 	<groupId>io.github.tquality</groupId>
 	<artifactId>CheckIt</artifactId>
-	<version>1.0.7-SNAPSHOT</version>
+	<version>1.0.7</version>
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
@@ -193,7 +193,7 @@
 		<connection>scm:git:git://github.com/tquality/CheckIt.git</connection>
 		<developerConnection>scm:git:git@github.com:tquality/CheckIt.git</developerConnection>
 		<url>https://github.com/tquality/CheckIt</url>
-		<tag>HEAD</tag>
+		<tag>CheckIt-1.0.7</tag>
 	</scm>
 
 	<properties>
