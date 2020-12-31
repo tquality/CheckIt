@@ -20,7 +20,7 @@ public class CheckItNotEqual {
         if (firstObject == secondObject){
             TakeScreenshot.createScreenshotJPEG(webDriver,screenshotFolder,"ObjectNotEqual");
         }
-        Assert.assertEquals(firstObject,secondObject);
+        Assert.assertNotEquals(firstObject,secondObject);
     }
 
     /**
@@ -34,7 +34,7 @@ public class CheckItNotEqual {
         if (firstObject.equals(secondObject)){
             TakeScreenshot.createScreenshotJPEG(webDriver,screenshotFolder,"ObjectNotEqual");
         }
-        Assert.assertEquals(firstObject,secondObject);
+        Assert.assertNotEquals(firstObject,secondObject);
     }
 
     /**
@@ -62,6 +62,6 @@ public class CheckItNotEqual {
         if (firstObject == secondObject){
             TakeScreenshot.createScreenshotJPEG(webDriver,screenshotFolder,"ObjectNotEqual");
         }
-        Assert.assertEquals(firstObject,secondObject);
+        Assert.assertNotEquals(firstObject,secondObject);
     }
 }
