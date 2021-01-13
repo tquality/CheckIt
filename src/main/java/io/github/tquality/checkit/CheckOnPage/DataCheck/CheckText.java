@@ -63,4 +63,26 @@ public abstract class CheckText {
             Assert.assertEquals(false,true,"Text not found on the page");
         }
     }
+
+    /**
+     * Check if a text effectivly is shown on the page
+     * @param webDriver the running webdriver
+     * @param text the text we want to find
+     * @param screenshotFolder the screenshotfolder for screenshots
+     */
+    public static void textNotDisplayedOnPage(WebDriver webDriver,String text,String screenshotFolder){
+        WaitForIt.waitForElementPresentXpath(webDriver,"//*[contains(text(),'" + text + "')]");
+        try{
+            List<WebElement> webElements = webDriver.findElements(By.xpath("//*[contains(text(),'" + text + "')]"));
+            for (WebElement webelement:webElements) {
+                if (webelement.isDisplayed()){
+                    TakeScreenshot.createScreenshotJPEG(webDriver,screenshotFolder,"Text found on the page");
+                    Assert.assertEquals(false,true,"Text found on the page");
+                }
+            }
+        }catch (NoSuchElementException ignored){
+            TakeScreenshot.createScreenshotJPEG(webDriver,screenshotFolder,"Text found on the page");
+            Assert.assertEquals(false,true,"Text found on the page");
+        }
+    }
 }
