@@ -52,13 +52,27 @@ public class CheckItNotEqual {
     }
 
     /**
-     * Check if 2 booleans are not equal
+     * Check if 2 long are not equal
      * @param webDriver the running webdriver
      * @param firstObject the first object
      * @param secondObject the second object
      * @param screenshotFolder the folder we want to store our scnreeshots in
      */
     public static void longAreNotEqual(WebDriver webDriver,long firstObject, long secondObject, String screenshotFolder){
+        if (firstObject == secondObject){
+            TakeScreenshot.createScreenshotJPEG(webDriver,screenshotFolder,"ObjectNotEqual");
+        }
+        Assert.assertNotEquals(firstObject,secondObject);
+    }
+
+    /**
+     * Check if 2 double are not equal
+     * @param webDriver the running webdriver
+     * @param firstObject the first object
+     * @param secondObject the second object
+     * @param screenshotFolder the folder we want to store our scnreeshots in
+     */
+    public static void doubleAreNotEqual(WebDriver webDriver,double firstObject, double secondObject, String screenshotFolder){
         if (firstObject == secondObject){
             TakeScreenshot.createScreenshotJPEG(webDriver,screenshotFolder,"ObjectNotEqual");
         }
