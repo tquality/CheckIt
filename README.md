@@ -1,4 +1,6 @@
-# CheckIt ![Maven Central](https://img.shields.io/maven-central/v/io.github.tquality/CheckIt.svg)
+# CheckIt 
+
+![Maven Central](https://img.shields.io/maven-central/v/io.github.tquality/CheckIt.svg)
 
 CheckIt is an easy to use class to assert and if the assert is not correct take a screenshot of the checkt webpage. The framework itself is split in several package with their own speciality. 
 
